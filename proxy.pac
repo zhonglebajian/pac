@@ -1,32 +1,46 @@
 function FindProxyForURL(url, host) {
-  // 直连：本机、局域网、国内常见域名
-  if (isPlainHostName(host) ||
-      shExpMatch(host, "localhost") ||
-      shExpMatch(host, "*.local") ||
-      shExpMatch(host, "127.*") ||
-      shExpMatch(host, "10.*") ||
-      shExpMatch(host, "172.16.*") ||
-      shExpMatch(host, "192.168.*") ||
-      shExpMatch(host, "169.254.*") ||
-      shExpMatch(host, "*.cn") ||
-      shExpMatch(host, "*.baidu.com") ||
-      shExpMatch(host, "*.qq.com") ||
-      shExpMatch(host, "*.weixin.qq.com") ||
-      shExpMatch(host, "*.taobao.com") ||
-      shExpMatch(host, "*.jd.com") ||
-      shExpMatch(host, "*.bilibili.com") ||
-      shExpMatch(host, "*.weibo.com") ||
-      shExpMatch(host, "*.163.com") ||
-      shExpMatch(host, "*.sina.com.cn") ||
-      shExpMatch(host, "*.aliyun.com") ||
-      shExpMatch(host, "*.tencent.com") ||
-      shExpMatch(host, "*.163.com") ||
-      shExpMatch(host, "*.360.com") ||
-      shExpMatch(host, "*.youku.com") ||
-      shExpMatch(host, "*.iqiyi.com")) {
-    return "DIRECT";
+  // 默认全部直连：PC/v2rayN 关闭时国内 App 与所有站点秒开，不受影响
+  // 仅下列境外域名走 PC 代理(混合端口10808)；PC关时自动回退直连
+  if (shExpMatch(host, "*.google.com") ||
+      shExpMatch(host, "*.googleapis.com") ||
+      shExpMatch(host, "*.gstatic.com") ||
+      shExpMatch(host, "*.youtube.com") ||
+      shExpMatch(host, "*.googlevideo.com") ||
+      shExpMatch(host, "*.ytimg.com") ||
+      shExpMatch(host, "*.ggpht.com") ||
+      shExpMatch(host, "*.twitter.com") ||
+      shExpMatch(host, "*.x.com") ||
+      shExpMatch(host, "*.facebook.com") ||
+      shExpMatch(host, "*.instagram.com") ||
+      shExpMatch(host, "*.fbcdn.net") ||
+      shExpMatch(host, "*.openai.com") ||
+      shExpMatch(host, "*.chatgpt.com") ||
+      shExpMatch(host, "*.oaistatic.com") ||
+      shExpMatch(host, "*.wikipedia.org") ||
+      shExpMatch(host, "*.mediawiki.org") ||
+      shExpMatch(host, "*.github.com") ||
+      shExpMatch(host, "*.githubusercontent.com") ||
+      shExpMatch(host, "*.githubassets.com") ||
+      shExpMatch(host, "*.discord.com") ||
+      shExpMatch(host, "*.reddit.com") ||
+      shExpMatch(host, "*.redditstatic.com") ||
+      shExpMatch(host, "*.netflix.com") ||
+      shExpMatch(host, "*.spotify.com") ||
+      shExpMatch(host, "*.medium.com") ||
+      shExpMatch(host, "*.substack.com") ||
+      shExpMatch(host, "*.telegram.org") ||
+      shExpMatch(host, "*.t.me") ||
+      shExpMatch(host, "*.whatsapp.net") ||
+      shExpMatch(host, "*.anthropic.com") ||
+      shExpMatch(host, "*.cloudflare.com") ||
+      shExpMatch(host, "*.figma.com") ||
+      shExpMatch(host, "*.notion.so") ||
+      shExpMatch(host, "*.steamcommunity.com") ||
+      shExpMatch(host, "*.twitch.tv") ||
+      shExpMatch(host, "*.vimeo.com") ||
+      shExpMatch(host, "*.epicgames.com")) {
+    return "PROXY 192.168.124.7:10808; DIRECT";
   }
-  // 其余走 PC 代理（混合端口10808，HTTP/SOCKS5皆可）；
-  // PC 关机或未开 v2rayN 时自动直连（关键兜底，免去手动关代理）
-  return "PROXY 192.168.124.7:10808; DIRECT";
+  // 其余一律直连（国内 App、国内站点、以及未列出的境外站）
+  return "DIRECT";
 }
