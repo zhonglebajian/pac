@@ -28,5 +28,5 @@ function FindProxyForURL(url, host) {
   }
   // 其余走 PC 代理（混合端口10808，HTTP/SOCKS5皆可）；
   // PC 关机或未开 v2rayN 时自动直连（关键兜底，免去手动关代理）
-  return "PROXY 192.168.124.7:10808; DIRECT";
+  return "PROXY 192.168.124.7:2080; DIRECT";
 }
